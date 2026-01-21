@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Algorithm Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e8e8e8;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .input-stats {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .input-stats span {
+            margin: 0 20px;
+            color: #aaa;
+        }
+        
+        .input-stats strong {
+            color: #00d9ff;
+        }
+        
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .crossword-container {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .crossword-container h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .grid {
+            display: grid;
+            gap: 1px;
+            background: #333;
+            padding: 1px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            aspect-ratio: 1;
+        }
+        
+        .cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: clamp(8px, 1.5vw, 14px);
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        .cell.white {
+            background: #fff;
+            color: #1a1a2e;
+        }
+        
+        .cell.black {
+            background: #1a1a2e;
+        }
+        
+        .word-number {
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            font-size: clamp(5px, 0.7vw, 8px);
+            font-weight: 400;
+            color: #555;
+            line-height: 1;
+        }
+        
+        .letter {
+            position: relative;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .stat {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .stat .label {
+            color: #888;
+        }
+        
+        .stat .value {
+            color: #00ff88;
+            font-weight: 600;
+            float: right;
+        }
+        
+        .failed {
+            text-align: center;
+            padding: 100px 20px;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .grid-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Crossword Algorithm Comparison</h1>
+    <p class="subtitle">Comparing 4 different crossword generation algorithms</p>
+    
+    <div class="input-stats">
+        <span>Total words: <strong>131</strong></span>
+        <span>Avg length: <strong>4.66</strong></span>
+    </div>
+    
+    <div class="grid-wrapper">
+        
+    <div class="crossword-container">
+        <h2>PuzzleCreator (Greedy + Scoring)</h2>
+        <div class="grid" style="grid-template-columns: repeat(15, 1fr);"><div class="cell white"><span class="word-number">1</span><span class="letter">I</span></div><div class="cell white"><span class="word-number">2</span><span class="letter">N</span></div><div class="cell white"><span class="word-number">3</span><span class="letter">C</span></div><div class="cell white"><span class="word-number">4</span><span class="letter">E</span></div><div class="cell white"><span class="word-number">5</span><span class="letter">L</span></div><div class="cell white"><span class="word-number">6</span><span class="letter">O</span></div><div class="cell white"><span class="word-number">7</span><span class="letter">U</span></div><div class="cell white"><span class="word-number">8</span><span class="letter">C</span></div><div class="cell white"><span class="word-number">9</span><span class="letter">L</span></div><div class="cell white"><span class="word-number">10</span><span class="letter">A</span></div><div class="cell white"><span class="word-number">11</span><span class="letter">R</span></div><div class="cell white"><span class="word-number">12</span><span class="letter">T</span></div><div class="cell white"><span class="word-number">13</span><span class="letter">E</span></div><div class="cell white"><span class="word-number">14</span><span class="letter">A</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">15</span><span class="letter">R</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">U</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">U</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">P</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="word-number">16</span><span class="letter">T</span></div><div class="cell white"><span class="word-number">17</span><span class="letter">T</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">H</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">P</span></div><div class="cell white"><span class="word-number">18</span><span class="letter">H</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">H</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="word-number">19</span><span class="letter">O</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">W</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="word-number">20</span><span class="letter">I</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">Z</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">21</span><span class="letter">A</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">C</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="word-number">22</span><span class="letter">C</span></div><div class="cell white"><span class="letter">H</span></div><div class="cell white"><span class="letter">U</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">Z</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="word-number">23</span><span class="letter">D</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="word-number">24</span><span class="letter">S</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">W</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="word-number">25</span><span class="letter">P</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">U</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="word-number">26</span><span class="letter">A</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">C</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="word-number">27</span><span class="letter">F</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">P</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="word-number">28</span><span class="letter">E</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">Z</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">P</span></div><div class="cell white"><span class="word-number">29</span><span class="letter">G</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">30</span><span class="letter">A</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">S</span></div><div class="cell white"><span class="letter">A</span></div></div>
+        
+    <div class="stats">
+        <div class="stat"><span class="label">Words placed:</span> <span class="value">51</span></div>
+        <div class="stat"><span class="label">Avg word length ratio:</span> <span class="value">0.21x</span></div>
+        <div class="stat"><span class="label">Black squares:</span> <span class="value">1.3%</span></div>
+        <div class="stat"><span class="label">Vertical/Horizontal:</span> <span class="value">0.82</span></div>
+    </div>
+    
+    </div>
+    
+        <div class="crossword-container">
+            <h2>Algorithm Failed</h2>
+            <div class="failed">Failed to generate</div>
+        </div>
+        
+    <div class="crossword-container">
+        <h2>Blacksquare (Beam Search)</h2>
+        <div class="grid" style="grid-template-columns: repeat(15, 1fr);"><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div></div>
+        
+    <div class="stats">
+        <div class="stat"><span class="label">Words placed:</span> <span class="value">0</span></div>
+        <div class="stat"><span class="label">Avg word length ratio:</span> <span class="value">0.00x</span></div>
+        <div class="stat"><span class="label">Black squares:</span> <span class="value">100.0%</span></div>
+        <div class="stat"><span class="label">Vertical/Horizontal:</span> <span class="value">0.00</span></div>
+    </div>
+    
+    </div>
+    
+    <div class="crossword-container">
+        <h2>Custom Backtracking (Optimized)</h2>
+        <div class="grid" style="grid-template-columns: repeat(15, 1fr);"><div class="cell white"><span class="word-number">1</span><span class="letter">F</span></div><div class="cell white"><span class="word-number">2</span><span class="letter">A</span></div><div class="cell white"><span class="word-number">3</span><span class="letter">M</span></div><div class="cell white"><span class="word-number">4</span><span class="letter">I</span></div><div class="cell white"><span class="word-number">5</span><span class="letter">L</span></div><div class="cell white"><span class="word-number">6</span><span class="letter">Y</span></div><div class="cell white"><span class="word-number">7</span><span class="letter">G</span></div><div class="cell white"><span class="word-number">8</span><span class="letter">A</span></div><div class="cell white"><span class="word-number">9</span><span class="letter">M</span></div><div class="cell white"><span class="word-number">10</span><span class="letter">E</span></div><div class="cell white"><span class="word-number">11</span><span class="letter">N</span></div><div class="cell white"><span class="word-number">12</span><span class="letter">I</span></div><div class="cell white"><span class="word-number">13</span><span class="letter">G</span></div><div class="cell white"><span class="word-number">14</span><span class="letter">H</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="word-number">15</span><span class="letter">A</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">V</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">16</span><span class="letter">Z</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">17</span><span class="letter">N</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">18</span><span class="letter">A</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">19</span><span class="letter">Q</span></div><div class="cell white"><span class="word-number">20</span><span class="letter">T</span></div><div class="cell white"><span class="word-number">21</span><span class="letter">I</span></div><div class="cell white"><span class="word-number">22</span><span class="letter">P</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">23</span><span class="letter">O</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell black"></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="word-number">24</span><span class="letter">N</span></div><div class="cell white"><span class="word-number">25</span><span class="letter">O</span></div><div class="cell white"><span class="word-number">26</span><span class="letter">R</span></div><div class="cell white"><span class="word-number">27</span><span class="letter">M</span></div><div class="cell white"><span class="word-number">28</span><span class="letter">A</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">Z</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">29</span><span class="letter">E</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell white"><span class="word-number">30</span><span class="letter">G</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">H</span></div><div class="cell black"></div><div class="cell white"><span class="letter">N</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">31</span><span class="letter">I</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">32</span><span class="letter">Y</span></div><div class="cell white"><span class="word-number">33</span><span class="letter">S</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">34</span><span class="letter">O</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="word-number">35</span><span class="letter">E</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">36</span><span class="letter">O</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">37</span><span class="letter">D</span></div><div class="cell white"><span class="letter">M</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">38</span><span class="letter">A</span></div><div class="cell white"><span class="word-number">39</span><span class="letter">R</span></div><div class="cell white"><span class="word-number">40</span><span class="letter">M</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="letter">N</span></div><div class="cell black"></div><div class="cell white"><span class="letter">L</span></div><div class="cell black"></div><div class="cell white"><span class="letter">N</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">41</span><span class="letter">A</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">42</span><span class="letter">N</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="word-number">43</span><span class="letter">A</span></div><div class="cell white"><span class="letter">H</span></div><div class="cell black"></div><div class="cell white"><span class="letter">E</span></div><div class="cell black"></div><div class="cell white"><span class="letter">D</span></div><div class="cell black"></div><div class="cell white"><span class="letter">E</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">44</span><span class="letter">N</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">45</span><span class="letter">R</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">46</span><span class="letter">R</span></div><div class="cell white"><span class="letter">H</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="letter">N</span></div><div class="cell black"></div><div class="cell white"><span class="letter">E</span></div><div class="cell black"></div><div class="cell white"><span class="letter">I</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">47</span><span class="letter">C</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">48</span><span class="letter">E</span></div><div class="cell white"><span class="letter">P</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="letter">I</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">49</span><span class="letter">S</span></div><div class="cell white"><span class="word-number">50</span><span class="letter">N</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">51</span><span class="letter">E</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell black"></div><div class="cell white"><span class="letter">I</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">52</span><span class="letter">M</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="word-number">53</span><span class="letter">L</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">T</span></div><div class="cell white"><span class="letter">L</span></div><div class="cell white"><span class="letter">E</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">O</span></div><div class="cell white"><span class="letter">C</span></div><div class="cell white"><span class="letter">K</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">54</span><span class="letter">V</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="letter">W</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">55</span><span class="letter">I</span></div><div class="cell white"><span class="word-number">56</span><span class="letter">M</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="word-number">57</span><span class="letter">N</span></div><div class="cell black"></div><div class="cell black"></div><div class="cell white"><span class="word-number">58</span><span class="letter">B</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">B</span></div><div class="cell white"><span class="letter">Y</span></div><div class="cell white"><span class="letter">G</span></div><div class="cell white"><span class="letter">R</span></div><div class="cell white"><span class="letter">A</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell white"><span class="letter">D</span></div><div class="cell black"></div><div class="cell white"><span class="word-number">59</span><span class="letter">T</span></div><div class="cell white"><span class="letter">I</span></div><div class="cell white"><span class="letter">N</span></div><div class="cell black"></div><div class="cell black"></div></div>
+        
+    <div class="stats">
+        <div class="stat"><span class="label">Words placed:</span> <span class="value">31</span></div>
+        <div class="stat"><span class="label">Avg word length ratio:</span> <span class="value">1.21x</span></div>
+        <div class="stat"><span class="label">Black squares:</span> <span class="value">38.2%</span></div>
+        <div class="stat"><span class="label">Vertical/Horizontal:</span> <span class="value">0.82</span></div>
+    </div>
+    
+    </div>
+    
+    </div>
+</body>
+</html>

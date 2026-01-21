@@ -1,0 +1,10 @@
+matplotlib>=3.5.0
+puzzlecreator
+crossword-generator
+genxword
+blacksquare
+ortools>=9.7
+openai>=1.0.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+
